@@ -1,0 +1,472 @@
+/******************************************************************************
+ *
+ * Copyright (c) 2017, the Perspective Authors.
+ *
+ * This file is part of the Perspective library, distributed under the terms of
+ * the Apache License 2.0.  The full license can be found in the LICENSE file.
+ *
+ */
+
+@import "variables";
+
+.psp-text-field {
+    position: relative;
+    background-color: var(--column-drop-container--background, white);
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-style: solid;
+    border-color: var(--column--border-color, @border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 24px;
+    transition: border-color 0.3s ease-out;
+}
+
+:host(.dragging) .psp-text-field.dropping {
+    border-bottom-width: 2px;
+    border-style: solid;
+    border-color: var(--psp-text-field--border-color, @blue800);
+}
+
+:host(.dragging) .psp-text-field {
+    border-bottom-width: 1px;
+    border-style: solid;
+    border-color: var(--psp-text-field--border-color, @blue800);
+}
+
+.psp-text-field > .psp-text-field__input {
+    border: 0px;
+    line-height: 20px;
+    vertical-align: bottom;
+    padding-bottom: 0px;
+    display: none;
+}
+
+.psp-text-field__input + label {
+    height: var(--column--height, auto);
+    line-height: 17px;
+    box-sizing: border-box;
+    color: var(--column-drop-label--color, rgb(204, 204, 204));
+    font-weight: 400;
+    white-space: nowrap;
+    padding: var(--column-drop-container--padding, 0px 0px 2px 10px);
+    font-size: 12px;
+    display: inline-block;
+    transition: font-size 0.3s, margin 0.3s;
+}
+
+.dropping .psp-text-field__input,
+.psp-text-field__input:not(:empty) {
+    display: block !important;
+}
+
+.dropping .psp-text-field__input::after {
+    content: "|";
+    width: 0px;
+    overflow: visible;
+    margin-top: -1px;
+    position: absolute;
+}
+
+.dropping * {
+    pointer-events: none;
+}
+
+.dropping .psp-text-field label,
+.psp-text-field__input:not(:empty) + label {
+    position: absolute;
+    top: 0px;
+    margin: var(--column-drop-label--margin, 0);
+    font-size: var(--column-drop-label--font-size, 12px);
+    display: var(--column-drop-label--display, none);
+}
+
+.selected_indicator() {
+    font-family: var(--interface--font-family, @sans-serif-fonts);
+    font-weight: 500;
+}
+
+.bordered() {
+    border-bottom-width: 1px;
+    border-style: solid;
+    border-color: var(--column--border-color, #ccc);
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+}
+
+.dropping perspective-row.inserting {
+    border-top: 25px solid rgba(0, 0, 0, 0);
+}
+
+.dropping perspective-row.postserting {
+    border-bottom: 25px solid rgba(0, 0, 0, 0);
+}
+
+/* These rules needs to be strictly ordered to avoid a bug in IE/ShadyCSS */
+:host perspective-row {
+    height: var(--column--height, 21px);
+    --row_draggable-height: var(--column--height, 21px);
+}
+
+:host(:not([row-pivots="[]"])) {
+    #active_columns perspective-row {
+        height: var(--active-column--height, 41px);
+        min-height: var(--active-column--height, 41px);
+        --row_draggable-height: var(--active-column--height, 41px);
+        --column_aggregate-display: inline-block;
+        --is_visible--height: var(--active-column-selector--height, auto);
+    }
+}
+
+:host {
+    font-family: var(--interface--font-family, @sans-serif-fonts);
+    background-color: #eee;
+    color: #333;
+
+    #app.columns_horizontal {
+        #columns_container {
+            flex-direction: row-reverse;
+        }
+
+        #active_columns,
+        #inactive_columns {
+            display: flex;
+            flex-direction: column;
+            flex: 0 1 auto;
+            width: 100%;
+        }
+
+        #inactive_columns {
+            flex: 1 1 auto;
+        }
+
+        #sub_columns {
+            flex-shrink: 1;
+
+            /* TODO broken */
+            perspective-row {
+                --column_name-margin: 0 25px 0 0;
+            }
+        }
+
+        #side_panel #divider {
+            display: none;
+        }
+
+        perspective-computed-column {
+            max-height: none;
+            margin-right: 24px;
+        }
+    }
+
+    perspective-computed-column {
+        --is_visible--before: var(--active-column-selector--content, "\25CF");
+        --row_draggable-background-color: var(
+            --active-column--background,
+            white
+        );
+        --row_draggable-border-color: var(--column--border-color, #ccc);
+        --row_draggable-border-width: 0 0 1px 0;
+        --row_draggable-overflow: hidden;
+        --column-selector--color: var(--active-column-selector--color, #999);
+    }
+
+    #side_panel perspective-row {
+        --name-before-display: inline-block;
+        --is_visible-display: inline-block;
+        --row_draggable-padding: 0px 10px 0px 0px;
+        --row_close-display: none;
+        --column_name-max-width: 180px;
+    }
+
+    #top_panel perspective-row {
+        --row_draggable-display: inline-block;
+    }
+
+    #columns_container {
+        flex-direction: column;
+        height: calc(~"100% - 29px");
+
+        #active_columns {
+            flex: 0 1 auto;
+
+            perspective-row {
+                margin-bottom: 2px;
+                --row_draggable-background-color: var(
+                    --active-column--background,
+                    white
+                );
+                --row_draggable-border-color: var(--column--border-color, #ccc);
+                --row_draggable-border-width: 0 0 1px 0;
+                --row_draggable-overflow: hidden;
+                --row_draggable--justify-content: space-evenly;
+            }
+
+            perspective-row:last-child {
+                --row_draggable-border-width: var(
+                    --row_draggable-border-last-child-width,
+                    0 0 1px 0
+                );
+            }
+
+            perspective-row[drop-target] {
+                --row_draggable_children-opacity: 0;
+            }
+        }
+
+        #active_columns,
+        #inactive_columns {
+            border: none !important;
+        }
+    }
+
+    ul {
+        transition: background-color 0.2s, border-color 0.2s;
+        outline: none;
+    }
+
+    .column_row() {
+        font-family: var(--interface-monospace--font-family, monospace);
+    }
+
+    #side_panel #side_panel__actions {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 1000;
+        justify-content: flex-start;
+        position: relative;
+        overflow-y: hidden;
+        width: 100%;
+        padding-top: 20px;
+        margin: var(--column-container--margin, 8px);
+        min-height: 36px;
+
+        button.side_panel-action {
+            align-items: center;
+            align-content: center;
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: row;
+            font-family: var(
+                --interface--font-family,
+                @sans-serif-fonts
+            ) !important;
+            font-size: 12px;
+            padding-right: 10px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            span {
+                margin-left: 5px;
+                font-size: 15px;
+            }
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .noselect {
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Safari */
+        -khtml-user-select: none;
+        /* Konqueror HTML */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+        /* Non-prefixed version, currently supported by Chrome and Opera */
+    }
+
+    svg text {
+        font-family: var(
+            --interface--font-family,
+            @sans-serif-fonts
+        ) !important;
+    }
+
+    svg .highcharts-axis-title,
+    svg .highcharts-axis-title {
+        font-family: var(
+            --interface--font-family,
+            @sans-serif-fonts
+        ) !important;
+    }
+
+    svg .highcharts-legend-box {
+        fill: none;
+    }
+
+    #pivot_chart {
+        background-color: var(--plugin--background, white);
+    }
+
+    #drop_target {
+        border: var(--plugin--border, none);
+    }
+
+    #pivot_chart_container {
+        box-shadow: var(--plugin--box-shadow, none);
+    }
+
+    #filters perspective-row {
+        margin: 0 24px 0 0;
+        --filter_operator-display: inline-block;
+        --filter_operand-display: inline-block;
+    }
+
+    .plugin_information {
+        color: var(--warning--color, inherit);
+        display: flex;
+        position: absolute;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 0.5rem;
+        width: 100%;
+        z-index: 10000;
+        transition: opacity 0.3s ease-out;
+        opacity: 1;
+
+        &.hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        &.plugin_information--warning {
+            background: @amber400;
+        }
+
+        .plugin_information__text {
+            font-size: 12px;
+            margin-right: 0.25rem;
+        }
+
+        .plugin_information__action {
+            font-size: 12px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .plugin_information__action--dismiss {
+            margin-left: auto;
+        }
+    }
+
+    #divider {
+        min-height: 2px;
+        height: 2px;
+        margin: 15px 13px 15px 13px;
+        margin-bottom: 5px;
+    }
+
+    #drop_target {
+        background: var(--plugin--background, #fff);
+    }
+
+    #drop_target_inner h3 {
+        color: #aaa;
+        font-weight: 300;
+    }
+
+    #config_button,
+    #reset_button,
+    #download_button,
+    #copy_button {
+        font-weight: normal;
+        font-family: var(--button--font-family, Arial);
+        color: var(--button--color, inherit);
+        font-size: var(--button--font-size, 16px);
+        color: #999;
+        transition: opacity 0.3s;
+        overflow: hidden;
+    }
+
+    #config_button:before {
+        font-feature-settings: "liga";
+        content: var(--config_button--before, "\1f527");
+    }
+
+    #reset_button:before {
+        font-feature-settings: "liga";
+        content: var(--reset_button--before, "Reset");
+    }
+
+    #download_button:before {
+        font-feature-settings: "liga";
+        content: var(--download_button--before, "Save");
+    }
+
+    #copy_button:before {
+        font-feature-settings: "liga";
+        content: var(--copy_button--before, "Copy");
+    }
+
+    #menubar {
+        display: none;
+        flex-direction: column;
+        padding-top: 55px;
+    }
+
+    #app.show_menu #menubar {
+        display: flex;
+    }
+
+    ul {
+        .bordered();
+        font-size: 12px;
+        padding: var(--column-drop-container--padding, 0px 10px 0px 10px);
+    }
+
+    select {
+        border-radius: 0;
+        background-color: var(--select--background-color, white);
+        .bordered();
+    }
+
+    select:focus {
+        outline: none;
+    }
+
+    input {
+        .bordered();
+    }
+
+    input::placeholder {
+        color: var(--column-drop-label--color, #ccc);
+    }
+
+    option[value=""] {
+        color: white !important;
+    }
+
+    #app {
+        background-color: inherit;
+    }
+
+    perspective-hypergrid {
+        color: #666;
+    }
+
+    ::-webkit-scrollbar,
+    ::shadow ::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar-thumb,
+    ::shadow ::-webkit-scrollbar-thumb {
+        background: #ccc;
+    }
+
+    ::-webkit-scrollbar-track,
+    ::shadow ::-webkit-scrollbar-track {
+        background: none;
+    }
+}

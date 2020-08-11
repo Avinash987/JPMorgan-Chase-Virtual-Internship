@@ -1,0 +1,83 @@
+/******************************************************************************
+ *
+ * Copyright (c) 2017, the Perspective Authors.
+ *
+ * This file is part of the Perspective library, distributed under the terms of
+ * the Apache License 2.0.  The full license can be found in the LICENSE file.
+ *
+ */
+
+@import "../less/variables";
+@import "material";
+
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import url("https://fonts.googleapis.com/css?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
+
+perspective-viewer {
+    background-color: @coolgrey800;
+    color: #cfd8dc;
+
+    --plugin--background: @coolgrey700;
+
+    --column-drop-label--color: #666;
+    --column--border-color: @coolgrey600;
+    --column-drop-target--background: @blue900;
+    --active-column-selector--color: @lightblue600;
+    --column_type-float--color: @lightblue600;
+    --column_type-string--color: rgb(255,136,136);
+    --psp-text-field--border-color: @lightblue600;
+    --button-hover--color: @lightblue600;
+
+    --hypergrid-tree-header--background: @coolgrey700;
+    --hypergrid-tree-header--color: #eee;
+    --hypergrid-header--background: @coolgrey700;
+    --hypergrid-separator--color: #eee;
+    --hypergrid-header--color: #eee;
+
+    --hypergrid-positive--color: @lightblue600;
+    --hypergrid-negative--color: rgb(255,136,136);
+    --hypergrid-positive--background: @coolgrey700;
+    --hypergrid-negative--background: @coolgrey700;
+
+    --hypergrid--font-size: 12px;
+    --hypergrid-header--font-size: 12px;
+    --hypergrid--font-family: "Open Sans";
+    --hypergrid-header--font-family: "Open Sans";
+
+    --hypergrid-row-hover--background: #555;
+    --hypergrid-row-hover--color: #eee;
+    --hypergrid-cell-hover--background: #444;
+    --hypergrid-cell-hover--color: #eee;
+
+    --highcharts-label--fill: @coolgrey200;
+    --highcharts-rect--opacity: 0.85;
+    --highcharts-grid-line--stroke: @coolgrey600;
+    --highcharts-tooltip--background: @coolgrey800;
+
+    --highcharts-heatmap-gradient-full: linear-gradient(
+        #feeb65 0%,
+        #e4521b 22.5%,
+        #4d342f 42.5%,
+        #222222 50%,
+        #1a237e 57.5%,
+        #42b3d5 67.5%,
+        #dcedc8 100%
+    );
+
+    --highcharts-heatmap-gradient-positive: linear-gradient(
+        #222222 0%,
+        #1a237e 35%,
+        #42b3d5 70%,
+        #dcedc8 100%
+    );
+
+    --highcharts-heatmap-gradient-negative: linear-gradient(
+        #feeb65 0%,
+        #e4521b 35%,
+        #4d342f 70%,
+        #222222 100%
+    );
+
+    --warning--color: #333;
+}

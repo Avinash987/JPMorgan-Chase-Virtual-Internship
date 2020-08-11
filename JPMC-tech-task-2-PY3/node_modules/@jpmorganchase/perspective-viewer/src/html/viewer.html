@@ -1,0 +1,92 @@
+<!--
+   
+   Copyright (c) 2017, the Perspective Authors.
+   
+   This file is part of the Perspective library, distributed under the terms of
+   the Apache License 2.0.  The full license can be found in the LICENSE file.
+
+-->
+
+<template id="perspective-viewer">
+
+    <div id="app">
+        <div id="menubar">
+            <div id="copy_button" class="noselect button" title="Copy"></div>
+            <div id="download_button" class="noselect button" title="Download"></div>
+            <div id="reset_button" class="noselect button" title="Reset"></div>
+        </div>
+        <div id='side_panel' class="column fixed noselect">
+            <div id="vis_selector_container">
+                <select id="vis_selector">
+                </select>
+            </div>
+            <div id="columns_container" style="visibility: hidden">
+                <ul id='active_columns'></ul>
+                <div id='divider'></div>
+                <div id="sub_columns">
+                    <ul id='inactive_columns'></ul>
+                    <div id="side_panel__actions" style="visibility: hidden">
+                        <div id="add-computed-column" class="side_panel-action"><span class="psp-icon psp-icon__add"></span><span class="psp-title__columnName">New Column</span></div>
+                    </div>
+                </div>
+                <perspective-computed-column></perspective-computed-column>
+            </div>
+        </div>
+        <div class="column noselect">
+            <div id='top_panel'>
+                <div class="rrow">
+                    <div id="row_pivots">
+                        <div class="psp-text-field">
+                            <ul class="psp-text-field__input" for="row-pivots"></ul>
+                            <label for="row_pivots"></label>
+                        </div>
+                    </div>
+                </div>
+                <span id="transpose_button" class="rrow centered">&#x21C4;</span>
+                <div class="rrow">
+                    <div id="column_pivots">
+                        <div class="psp-text-field">
+                            <ul class="psp-text-field__input" for="column-pivots"></ul>
+                            <label for="column_pivots"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="rrow">
+                    <div id="sort">
+                        <div class="psp-text-field">
+                            <ul class="psp-text-field__input" for="sort"></ul>
+                            <label for="sort"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="rrow" style='flex-grow:3;height:auto;flex:1 1 400px;max-width:none'>
+                    <div id="filters">
+                        <div class="psp-text-field">
+                            <ul class="psp-text-field__input" for='filters'></ul>
+                            <label for="filters"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="pivot_chart_container">
+                <div class="plugin_information plugin_information--warning hidden" id="plugin_information--size">
+                    <span class="plugin_information__text" id="plugin_information_count">Estimated rendering</span>
+                    <span class="plugin_information__action">Continue to Render</span>
+                    <span class="plugin_information__action plugin_information__action--dismiss">Don't Show Again</span>
+                </div>
+                <div id="pivot_chart"></div>
+            </div>
+        </div>
+
+        <div id="config_button" class="noselect button"></div>
+
+        <div id='drop_target'>
+            <div id='drop_target_inner'>
+
+            </div>
+        </div>
+
+        <slot></slot>
+    </div>
+
+</template>

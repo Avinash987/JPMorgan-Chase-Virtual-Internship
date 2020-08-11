@@ -1,0 +1,160 @@
+/******************************************************************************
+ *
+ * Copyright (c) 2017, the Perspective Authors.
+ *
+ * This file is part of the Perspective library, distributed under the terms of
+ * the Apache License 2.0.  The full license can be found in the LICENSE file.
+ *
+ */
+
+ .titled {
+    margin-top: 23px;
+}
+
+:host {
+    #app #top_panel {
+        #row_pivots label:before {
+            content: var(--row_pivots--before, "Row Pivots");
+        }
+
+        #column_pivots label:before {
+            content: var(--column_pivots--before, "Column Pivots");
+        }
+
+        #sort label:before {
+            content: "Sort";
+        }
+
+        #filters label:before {
+            content: "Filter";
+        }
+    }
+
+    #app #side_panel {
+        #active_columns {
+            perspective-row:before {
+                font-size: 10px;
+                margin-left: var(--column_selector--width, 20px);
+                left: 1px;
+                padding: var(--column_type--padding, 0px 0px 0px 5px);
+                color: #666;
+                position: absolute;
+                margin-top: -15px;
+            }
+        }
+    }
+}
+
+:host([view="xy_line"]) {
+    #app.columns_horizontal #side_panel {
+        #inactive_columns {
+            padding-top: 28px;
+        }
+    }
+
+    #app #side_panel {
+        #active_columns {
+            perspective-row:nth-child(1) {
+                .titled();
+
+                &:before {
+                    content: "X Axis";
+                }
+            }
+
+            perspective-row:nth-child(2) {
+                .titled();
+
+                &:before {
+                    content: "Y Axis";
+                }
+            }
+        }
+    }
+}
+
+:host([view="xy_scatter"]),
+:host([view="xy_line"]) {
+    #app.columns_horizontal #side_panel {
+        #inactive_columns {
+            padding-top: 28px;
+        }
+    }
+
+    #app #side_panel {
+        #active_columns {
+            perspective-row:nth-child(1) {
+                .titled();
+
+                &:before {
+                    content: "X Axis";
+                }
+            }
+
+            perspective-row:nth-child(2) {
+                .titled();
+
+                &:before {
+                    content: "Y Axis";
+                }
+            }
+        }
+    }
+}
+
+:host([view="xy_scatter"]) {
+    #app.columns_horizontal #side_panel {
+        #inactive_columns {
+            padding-top: 28px;
+        }
+    }
+
+    #app #side_panel {
+        #active_columns {
+            perspective-row:nth-child(3) {
+                .titled();
+
+                &:before {
+                    content: "Color";
+                }
+            }
+
+            perspective-row:nth-child(4) {
+                .titled();
+
+                &:before {
+                    content: "Size";
+                }
+            }
+        }
+    }
+}
+
+:host([view="treemap"]),
+:host([view="sunburst"]) {
+    #app.columns_horizontal #side_panel {
+        #inactive_columns {
+            padding-top: 28px;
+        }
+    }
+
+    #app #side_panel {
+        #active_columns {
+            perspective-row:nth-child(1) {
+                .titled();
+
+                &:before {
+                    content: "Size";
+                }
+            }
+
+            perspective-row:nth-child(2) {
+                .titled();
+
+                &:before {
+                    content: "Color";
+                }
+            }
+        }
+    }
+}
